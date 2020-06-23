@@ -82,6 +82,7 @@ public class OpenApiUtils {
                     templateReplacement.put( templateVariable, ".*" );
             }
             String uri = uriTemplate.createURI( templateReplacement );
+            uri = uri.replace("/v2/lightningObs","");
             Pattern pattern = Pattern.compile( uri );
             return pattern.matcher( requestedPath ).matches();
         }
@@ -338,7 +339,7 @@ public class OpenApiUtils {
         Map<String, Path> pathItemObjects = apiModel.getPaths();
         for ( Path pathItemObject : pathItemObjects.values() ) {
             String pathString = pathItemObject.getPathString();
-            if ( pathMatch.apply( pathString, path ) ) {
+            if ( pathMatch.apply( pathString.replace("/v2/lightningObs",""), path ) ) {
                 pathItems.add( pathItemObject );
             }
         }
